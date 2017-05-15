@@ -4,5 +4,10 @@
         "react",
         "jsx-a11y",
         "import"
-    ]
+    ],
+    "rules": {
+      "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+      "semi": [2, "never"],
+      "no-unexpected-multiline": 2
+    }
 }
