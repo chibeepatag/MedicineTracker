@@ -37,8 +37,8 @@ class PatientScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  patientUrn: state.nameInput,
-  patientName: state.emailInput,
+  patientName: state.patientName,
+  patientURN: state.patientURN,
 })
 const mapDispatchToProps = dispatch => (
   bindActionCreators(ActionCreators, dispatch)

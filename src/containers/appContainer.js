@@ -30,14 +30,19 @@ class AppContainer extends Component {
             <EventScreen />
           </Tab>
           <Tab heading="Medications">
-            <View><Text>jkjk</Text></View>
+            <View><Text>{this.props.patientName}</Text></View>
           </Tab>
         </Tabs>
       </Container>)
   }
 }
 
+const mapStateToProps = state => ({
+  patientName: state.patientName,
+  patientURN: state.patientURN,
+})
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ActionCreators, dispatch)
 }
-export default connect(() => ({}), mapDispatchToProps)(AppContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer)
