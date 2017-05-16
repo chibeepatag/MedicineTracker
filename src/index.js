@@ -5,26 +5,31 @@
  */
 
 import React from 'react'
-import {
-  Text,
-  View,
-} from 'react-native'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import reducer from './reducers'
+import AppContainer from './containers/appContainer'
 
-const MedicineTracker = () => (
-  <View>
-    <Text>
-        Welcome to React Native!
-      </Text>
-    <Text>
-        Welcome to React Native!
-      </Text>
-    <Text>
-        Welcome to React Native!
-      </Text>
-    <Text>
-        Welcome to React Native!
-      </Text>
-  </View>
+const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__ })
+
+function configureStore(initialState) {
+  const enhancer = compose(
+    applyMiddleware(
+      thunkMiddleware,
+      loggerMiddleware,
+    ),
   )
+  return createStore(reducer, initialState, enhancer)
+}
 
-export default MedicineTracker
+const store = configureStore({})
+
+const App = () => (
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>
+)
+
+export default App

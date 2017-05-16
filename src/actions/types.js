@@ -1,0 +1,4 @@
+export const SET_PATIENT_URN = 'SET_PATIENT_URN'
+export const SET_PATIENT_NAME = 'SET_PATIENT_NAME'
+export const SET_EVENT = 'SET_EVENT'
+export const SET_MEDICINE = 'SET_EVENT'
