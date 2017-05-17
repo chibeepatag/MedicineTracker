@@ -30,6 +30,8 @@ class AppContainer extends Component {
         duration: 3000,
       })
     } else if (this.state.currentTab === 2) {
+      const medicine = this.props.medicine
+      this.props.addMedicine(medicine)
       Toast.show({
         text: 'Medicine added!',
         position: 'bottom',
@@ -78,6 +80,7 @@ class AppContainer extends Component {
 
 const mapStateToProps = state => ({
   event: state.event,
+  medicine: state.medicine
 })
 
 function mapDispatchToProps(dispatch) {
