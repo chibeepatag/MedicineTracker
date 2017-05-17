@@ -5,16 +5,17 @@
 */
 
 import React from 'react'
-import { StyleSheet } from 'react-native'
 import { Content, List, ListItem, Text } from 'native-base'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 
-const styles = StyleSheet.create({
-})
+type Props = {
+  events: [],
+  medicines: [],
+}
 
-const ReportScreen = props => (
+const ReportScreen = (props: Props) => (
   <Content>
     <List>
       <ListItem itemDivider>
