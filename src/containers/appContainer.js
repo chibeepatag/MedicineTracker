@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Container, Header, Title, Left, Right, Body, Button, Icon, Tabs, Tab, Footer, FooterTab, Toast } from 'native-base'
@@ -7,6 +7,7 @@ import { ActionCreators } from '../actions'
 import PatientScreen from './patientScreen'
 import EventScreen from './eventScreen'
 import MedicationScreen from './medicineScreen'
+import ReportScreen from './reportScreen'
 
 class AppContainer extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class AppContainer extends Component {
       Toast.show({
         text: 'Event added!',
         position: 'bottom',
-        duration: 3000,
+        duration: 1500,
       })
     } else if (this.state.currentTab === 2) {
       const medicine = this.props.medicine
@@ -35,28 +36,32 @@ class AppContainer extends Component {
       Toast.show({
         text: 'Medicine added!',
         position: 'bottom',
-        duration: 3000,
+        duration: 1500,
       })
     }
   }
 
+  send() {
+    Toast.show({
+      text: 'Report sent!',
+      position: 'bottom',
+      duration: 1500,
+    })
+  }
+
   render() {
-    let addButton = null
+    let footerButton = null
     if ([1, 2].includes(this.state.currentTab)) {
-      addButton = <Button full onPress={() => this.add()}><Text>Add</Text></Button>
+      footerButton = <Button full onPress={() => this.add()}><Text>Add</Text></Button>
+    } else if (this.state.currentTab === 3) {
+      footerButton = <Button full onPress={() => this.send()}><Text>Send</Text></Button>
     }
     return (
       <Container>
         <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="menu" />
-            </Button>
-          </Left>
           <Body>
             <Title>Medicine Tracker</Title>
           </Body>
-          <Right />
         </Header>
         <Tabs onChangeTab={event => this.changeTab(event)}>
           <Tab heading="Patient">
@@ -65,13 +70,16 @@ class AppContainer extends Component {
           <Tab heading="Event">
             <EventScreen />
           </Tab>
-          <Tab heading="Medications">
+          <Tab heading="Medicine">
             <MedicationScreen />
+          </Tab>
+          <Tab heading="Report">
+            <ReportScreen />
           </Tab>
         </Tabs>
         <Footer>
           <FooterTab>
-            {addButton}
+            {footerButton}
           </FooterTab>
         </Footer>
       </Container>)
