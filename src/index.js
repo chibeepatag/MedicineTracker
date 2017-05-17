@@ -33,6 +33,16 @@ const store = configureStore({
     reaction: 'Uticaria',
   },
   events: [],
+  medicine: {
+    medicineClass: 'Aminoglycosides',
+    antibiotic: 'Amikacin',
+    dose: '50mg',
+    frequency: 'Daily',
+    route: 'PO',
+    start: new Date(),
+    end: new Date(),
+  },
+  medicines: [],
 })
 
 const App = () => (

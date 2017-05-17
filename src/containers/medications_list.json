@@ -1,0 +1,114 @@
+{
+    aminoglycosides: {
+    name: 'Aminoglycosides',
+    antibiotics: ['Amikacin',
+                  'Gentamicin',
+                  'Neomycin',
+                  'Tobramycin',
+                  'Streptomycin']
+  },
+  ansamycins: {
+    name: 'Ansamycins',
+    antibiotics: ['Rifaximin']
+  },
+  carbapenems: {
+    name: 'Carbapenems',
+    antibiotics: ['Ertapenem',
+                  'Imipenem',
+                  'Meropenem']
+  },
+  cephalosporins: {
+    name: 'Cephalosporins',
+    antibiotics: ['Cephazolin',
+                  'Cephalothin',
+                  'Cephalexin',
+                  'Cefaclor',
+                  'Cefuroxime',
+                  'Ceftazidime ',
+                  'Ceftriaxone ',
+                  'Cefepime']
+  },
+  glycopeptides: {
+    name: 'Glycopeptides',
+    antibiotics: ['Teicoplanin',
+                  'Vancomycin']
+  },
+  lincosamides: {
+    name: 'Lincosamides',
+    antibiotics: ['Clindamycin',
+                  'Lincomycin']
+  },
+  lipopeptide: {
+    name: 'Lipopeptide',
+    antibiotics: ['Daptomycin']
+  },
+  macrolides: {
+    name: 'Macrolides',
+    antibiotics: ['Azithromycin',
+                  'Clarithromycin',
+                  'Erythromycin',
+                  'Roxithromycin',
+                  'Spiramycin']
+  },
+  monobactams: {
+    name: 'Monobactams',
+    antibiotics: ['Aztreonam']
+  },
+  nitrofurans: {
+    name: 'Nitrofurans',
+    antibiotics: ['Nitrofurantoin']
+  },
+  oxazolidinones: {
+    name: 'Oxazolidinones',
+    antibiotics: ['Linezolid']
+  },
+  penicillins: {
+    name: 'Penicillins',
+    antibiotics: ['Amoxicillin',
+                  'Augmentin',
+                  'Ampicillin',
+                  'Benzyl Penicillin',
+                  'Dicloxacillin',
+                  'Flucloxacillin',
+                  'Penicillin G',
+                  'Penicillin V',
+                  'Piperacillin',
+                  'Ticarcillin',
+                  'Tazocin',
+                  'Timentin']
+  },
+  quinolones: {
+    name: 'Quinolones',
+    antibiotics: ['Ciprofloxacin',
+                  'Levofloxacin',
+                  'Moxifloxacin',
+                  'Norfloxacin']
+  },
+  sulfonamides: {
+    name: 'Sulfonamides',
+    antibiotics: ['Sulfadiazine',
+                  'Sulfamethoxazole',
+                  'Trimethoprim-Sulfamethoxazole']
+  },
+  tetracyclines: {
+    name: 'Tetracyclines',
+    antibiotics: ['Doxycycline',
+                  'Minocycline']
+  },
+  other: {
+    name: 'Other',
+    antibiotics: ['Metronidazole',
+                  'Trimethoprim',
+                  'Dapsone',
+                  'Ethambutol',
+                  'Isoniazid',
+                  'Pyrazinamide',
+                  'Rifampicin',
+                  'Rifabutin',
+                  'Streptomycin',
+                  'Chloramphenicol',
+                  'Tigecycline',
+                  'Fosfomycin',
+                  'Fusidic acid']
+  }
+}

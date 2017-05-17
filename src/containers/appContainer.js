@@ -6,6 +6,7 @@ import { Container, Header, Title, Left, Right, Body, Button, Icon, Tabs, Tab, F
 import { ActionCreators } from '../actions'
 import PatientScreen from './patientScreen'
 import EventScreen from './eventScreen'
+import MedicationScreen from './medicineScreen'
 
 class AppContainer extends Component {
   constructor(props) {
@@ -63,7 +64,7 @@ class AppContainer extends Component {
             <EventScreen />
           </Tab>
           <Tab heading="Medications">
-            <View><Text>Celine </Text></View>
+            <MedicationScreen />
           </Tab>
         </Tabs>
         <Footer>
