@@ -9,6 +9,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 
+type Props = {
+    setPatientURN: Function,
+    setPatientName: Function,
+}
+
 class PatientScreen extends Component {
 
   setURN(text) {

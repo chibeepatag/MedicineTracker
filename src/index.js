@@ -12,6 +12,7 @@ import { createLogger } from 'redux-logger'
 import reducer from './reducers'
 import AppContainer from './containers/appContainer'
 
+// eslint-disable-next-line no-undef, no-unused-vars
 const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__ })
 
 function configureStore(initialState) {
@@ -24,7 +25,7 @@ function configureStore(initialState) {
   return createStore(reducer, initialState, enhancer)
 }
 
-const store = configureStore({ patientName: '', patientURN: '' })
+const store = configureStore({})
 
 const App = () => (
   <Provider store={store}>
