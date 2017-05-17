@@ -21,6 +21,8 @@ class AppContainer extends Component {
 
   add() {
     if (this.state.currentTab === 1) {
+      const event = this.props.event
+      this.props.addEvent(event)
       Toast.show({
         text: 'Event added!',
         position: 'bottom',
@@ -74,8 +76,7 @@ class AppContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  patientName: state.patientName,
-  patientURN: state.patientURN,
+  event: state.event,
 })
 
 function mapDispatchToProps(dispatch) {

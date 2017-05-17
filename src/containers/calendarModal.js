@@ -34,23 +34,14 @@ const styles = StyleSheet.create({
 export default class CalendarModal extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      selectedStartDate: null,
-      selectedEndDate: null,
-    }
     this.onDateChange = this.onDateChange.bind(this)
   }
 
   onDateChange(date, type) {
     if (type === 'END_DATE') {
-      this.setState({ selectedEndDate: date })
       this.props.setEndDate(date)
     } else {
       this.props.setStartDate(date)
-      this.setState({
-        selectedStartDate: date,
-        selectedEndDate: null,
-      })
     }
   }
 

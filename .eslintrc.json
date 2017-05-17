@@ -1,5 +1,11 @@
 {
     "extends": "airbnb",
+    "parserOptions": {
+       "sourceType": "module",
+       "ecmaFeatures": {
+           "jsx": true
+       }
+   },
     "plugins": [
         "react",
         "jsx-a11y",
@@ -8,6 +14,7 @@
     "rules": {
       "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
       "semi": [2, "never"],
-      "no-unexpected-multiline": 2
+      "no-unexpected-multiline": 2,
+      "react/no-array-index-key": "warn"
     }
 }

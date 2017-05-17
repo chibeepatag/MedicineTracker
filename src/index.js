@@ -25,7 +25,15 @@ function configureStore(initialState) {
   return createStore(reducer, initialState, enhancer)
 }
 
-const store = configureStore({})
+const store = configureStore({
+  event: {
+    date: new Date(),
+    severity: 'Mild',
+    organ: 'Skin',
+    reaction: 'Uticaria',
+  },
+  events: [],
+})
 
 const App = () => (
   <Provider store={store}>

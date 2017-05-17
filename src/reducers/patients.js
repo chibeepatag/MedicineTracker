@@ -1,14 +1,11 @@
 import createReducer from '../lib/createReducer'
 import * as types from '../actions/types'
 
-export const patientURN = createReducer({ patientURN: '' }, {
+export const patient = createReducer({}, {
   [types.SET_PATIENT_URN](state, action) {
-    return action.payload
+    return { ...state, patientURN: action.payload }
   },
-})
-
-export const patientName = createReducer({ patientName: '' }, {
   [types.SET_PATIENT_NAME](state, action) {
-    return action.payload
+    return { ...state, patientName: action.payload }
   },
 })
