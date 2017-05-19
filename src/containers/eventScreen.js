@@ -22,7 +22,20 @@ const styles = StyleSheet.create({
   },
 })
 
+type Props = {
+  date: Object,
+  severity: string,
+  organ: string,
+  reaction: string,
+  setEventDate: Function,
+  setEventSeverity: Function,
+  setEventOrgan: Function,
+  setEventReaction: Function,
+}
+
 class EventScreen extends Component {
+  props: Props // eslint-disable-line react/sort-comp
+  state: Object // eslint-disable-line react/sort-comp
   constructor(props) {
     super(props)
     this.state = {
@@ -31,18 +44,18 @@ class EventScreen extends Component {
     }
   }
 
-  setReaction(value) {
+  setReaction(value: string) {
     this.props.setEventReaction(value)
   }
 
-  setOrgan(value) {
+  setOrgan(value: string) {
     const keys = Object.keys(ORGAN_REACTION_LIST)
     const key = keys.find(item => ORGAN_REACTION_LIST[item].organ === value)
     this.setState({ reactions: ORGAN_REACTION_LIST[key].reactions })
     this.props.setEventOrgan(value)
   }
 
-  setSeverity(value) {
+  setSeverity(value: string) {
     this.props.setEventSeverity(value)
   }
 

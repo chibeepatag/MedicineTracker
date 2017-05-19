@@ -1,3 +1,9 @@
+/**
+* Sample React Native App
+* https://github.com/facebook/react-native
+* @flow
+*/
+
 import React, { Component } from 'react'
 import {
   StyleSheet,
@@ -31,13 +37,19 @@ const styles = StyleSheet.create({
   },
 })
 
-export default class CalendarModal extends Component {
-  constructor(props) {
-    super(props)
-    this.onDateChange = this.onDateChange.bind(this)
-  }
+type Props = {
+  modalVisible: boolean,
+  title: string,
+  allowRangeSelection: boolean,
+  setEndDate: Function,
+  setStartDate: Function,
+  toggleCalendarModal: Function,
+}
 
-  onDateChange(date, type) {
+export default class CalendarModal extends Component {
+  props: Props // eslint-disable-line react/sort-comp
+
+  onDateChange(date: Date, type: string) {
     if (type === 'END_DATE') {
       this.props.setEndDate(date)
     } else {
@@ -75,7 +87,7 @@ export default class CalendarModal extends Component {
               todayBackgroundColor="#f2e6ff"
               selectedDayColor="#7300e6"
               selectedDayTextColor="#FFFFFF"
-              onDateChange={this.onDateChange}
+              onDateChange={(date, type) => this.onDateChange(date, type)}
             />
             <View />
           </View>

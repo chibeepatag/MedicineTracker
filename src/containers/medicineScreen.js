@@ -22,36 +22,55 @@ const styles = StyleSheet.create({
   },
 })
 
+type Props = {
+  class: string,
+  antibiotic: string,
+  dose: string,
+  frequency: string,
+  route: string,
+  start: Object,
+  end: Object,
+  setMedicineClass: Function,
+  setMedicineAntibiotic: Function,
+  setMedicineDose: Function,
+  setMedicineFrequency: Function,
+  setMedicineRoute: Function,
+  setMedicineStart: Function,
+  setMedicineEnd: Function,
+}
+
 class MedicationScreen extends Component {
+  props: Props  // eslint-disable-line react/sort-comp
+  state: Object // eslint-disable-line react/sort-comp
 
   constructor(props) {
     super(props)
     this.state = {
       calendarModalVisible: false,
-      antibiotics: MEDICATIONS_LIST.aminoglycosides.antibiotics
+      antibiotics: MEDICATIONS_LIST.aminoglycosides.antibiotics,
     }
   }
 
-  onValueChangeClass(value) {
+  onValueChangeClass(value: string) {
     const keys = Object.keys(MEDICATIONS_LIST)
     const key = keys.find(index => MEDICATIONS_LIST[index].name === value)
     this.setState({ antibiotics: MEDICATIONS_LIST[key].antibiotics })
     this.props.setMedicineClass(value)
   }
 
-  onValueChangeAntibiotic(value) {
+  onValueChangeAntibiotic(value: string) {
     this.props.setMedicineAntibiotic(value)
   }
 
-  onValueChangeDose(value) {
+  onValueChangeDose(value: string) {
     this.props.setMedicineDose(value)
   }
 
-  onValueChangeFrequency(value) {
+  onValueChangeFrequency(value: string) {
     this.props.setMedicineFrequency(value)
   }
 
-  onValueChangeRoute(value) {
+  onValueChangeRoute(value: string) {
     this.props.setMedicineRoute(value)
   }
 
@@ -108,7 +127,8 @@ class MedicationScreen extends Component {
               onValueChange={value => this.onValueChangeDose(value)}
             >
               {DOSE.map((dose, index) =>
-                <Picker.Item key={index}
+                <Picker.Item
+                  key={index}
                   label={dose} value={dose} itemTextStyle={styles.itemStyle}
                 />)}
             </Picker>
@@ -122,7 +142,8 @@ class MedicationScreen extends Component {
               onValueChange={value => this.onValueChangeFrequency(value)}
             >
               {FREQUENCY.map((dose, index) =>
-                <Picker.Item key={index}
+                <Picker.Item
+                  key={index}
                   label={dose} value={dose} itemTextStyle={styles.itemStyle}
                 />)}
             </Picker>
@@ -136,7 +157,8 @@ class MedicationScreen extends Component {
               onValueChange={value => this.onValueChangeRoute(value)}
             >
               {ROUTE.map((dose, index) =>
-                <Picker.Item key={index}
+                <Picker.Item
+                  key={index}
                   label={dose} value={dose} itemTextStyle={styles.itemStyle}
                 />)}
             </Picker>

@@ -1,3 +1,7 @@
 {
-  "presets": ["react-native", "flow"]
+  "presets": [
+    "react-native",
+     "flow"
+   ],
+  "plugins": [["flow-react-proptypes", {ignoreNodeModules: true}]]
 }

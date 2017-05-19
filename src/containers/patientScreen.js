@@ -15,6 +15,7 @@ type Props = {
 }
 
 class PatientScreen extends Component {
+  props: Props // eslint-disable-line react/sort-comp
 
   setURN(text) {
     this.props.setPatientURN(text)

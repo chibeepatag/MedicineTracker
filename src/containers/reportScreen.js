@@ -22,13 +22,17 @@ const ReportScreen = (props: Props) => (
         <Text>Events</Text>
       </ListItem>
       {props.events.map((event, index) =>
-        <ListItem key={index}><Text>{event.severity} {event.reaction}</Text></ListItem>
+        <ListItem key={index}>
+          <Text>{event.severity} {event.reaction}</Text>
+        </ListItem> // eslint-disable-line  comma-dangle
       )}
       <ListItem itemDivider>
         <Text>Medicines</Text>
       </ListItem>
       {props.medicines.map((medicine, index) =>
-        <ListItem key={index}><Text>{medicine.antibiotic} {medicine.dose}</Text></ListItem>
+        <ListItem key={index}>
+          <Text>{medicine.antibiotic} {medicine.dose}</Text>
+        </ListItem> // eslint-disable-line  comma-dangle
       )}
     </List>
   </Content>
