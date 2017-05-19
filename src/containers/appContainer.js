@@ -1,24 +1,46 @@
+// @flow
 import React, { Component } from 'react'
 import { Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Container, Header, Title, Left, Right, Body, Button, Icon, Tabs, Tab, Footer, FooterTab, Toast } from 'native-base'
+import { Container, Header, Title, Body, Button, Tabs, Tab, Footer, FooterTab, Toast } from 'native-base'
 import { ActionCreators } from '../actions'
 import PatientScreen from './patientScreen'
 import EventScreen from './eventScreen'
 import MedicationScreen from './medicineScreen'
 import ReportScreen from './reportScreen'
 
+type Props = {
+  event: Object,
+  medicine: Object,
+  addEvent: Function,
+  addMedicine: Function,
+}
+
+type State = {
+  currentTab: number,
+  emailModalVisible: boolean,
+}
+
 class AppContainer extends Component {
+  props: Props
+  state: State // eslint-disable-line react/sort-comp
+
   constructor(props) {
     super(props)
     this.state = {
       currentTab: 0,
+      emailModalVisible: false,
     }
   }
 
   changeTab(event) {
     this.setState({ currentTab: event.i })
+  }
+
+  toggleEmailModal() {
+    console.log(this.state.emailModalVisible)
+    this.setState({ emailModalVisible: !this.state.emailModalVisible })
   }
 
   add() {
@@ -42,11 +64,7 @@ class AppContainer extends Component {
   }
 
   send() {
-    Toast.show({
-      text: 'Report sent!',
-      position: 'bottom',
-      duration: 1500,
-    })
+    this.toggleEmailModal()
   }
 
   render() {
@@ -54,7 +72,7 @@ class AppContainer extends Component {
     if ([1, 2].includes(this.state.currentTab)) {
       footerButton = <Button full onPress={() => this.add()}><Text>Add</Text></Button>
     } else if (this.state.currentTab === 3) {
-      footerButton = <Button full onPress={() => this.send()}><Text>Send</Text></Button>
+      footerButton = <Button full onPress={() => this.send()}><Text>Email</Text></Button>
     }
     return (
       <Container>
@@ -74,7 +92,10 @@ class AppContainer extends Component {
             <MedicationScreen />
           </Tab>
           <Tab heading="Report">
-            <ReportScreen />
+            <ReportScreen
+              emailModalVisible={this.state.emailModalVisible}
+              toggleEmailModal={() => this.toggleEmailModal()}
+            />
           </Tab>
         </Tabs>
         <Footer>
@@ -88,7 +109,7 @@ class AppContainer extends Component {
 
 const mapStateToProps = state => ({
   event: state.event,
-  medicine: state.medicine
+  medicine: state.medicine,
 })
 
 function mapDispatchToProps(dispatch) {

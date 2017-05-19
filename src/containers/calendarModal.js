@@ -17,8 +17,7 @@ import CalendarPicker from 'react-native-calendar-picker'
 
 const styles = StyleSheet.create({
   modalContainer: {
-
-    backgroundColor: 'white',
+    backgroundColor: '#dce2ed',
     justifyContent: 'center',
     padding: 15,
     width: 375,
@@ -41,7 +40,7 @@ type Props = {
   modalVisible: boolean,
   title: string,
   allowRangeSelection: boolean,
-  setEndDate: Function,
+  setEndDate: ?Function,
   setStartDate: Function,
   toggleCalendarModal: Function,
 }
@@ -50,7 +49,7 @@ export default class CalendarModal extends Component {
   props: Props // eslint-disable-line react/sort-comp
 
   onDateChange(date: Date, type: string) {
-    if (type === 'END_DATE') {
+    if (type === 'END_DATE' && this.props.setEndDate) {
       this.props.setEndDate(date)
     } else {
       this.props.setStartDate(date)

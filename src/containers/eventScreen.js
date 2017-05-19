@@ -33,9 +33,14 @@ type Props = {
   setEventReaction: Function,
 }
 
+type State = {
+  calendarModalVisible: boolean,
+  reactions: [],
+}
+
 class EventScreen extends Component {
   props: Props // eslint-disable-line react/sort-comp
-  state: Object // eslint-disable-line react/sort-comp
+  state: State // eslint-disable-line react/sort-comp
   constructor(props) {
     super(props)
     this.state = {
@@ -124,7 +129,7 @@ class EventScreen extends Component {
         <CalendarModal
           modalVisible={this.state.calendarModalVisible}
           toggleCalendarModal={() => this.toggleCalendarModal()}
-          title={'Event Date '} allowRangeSelection={false}
+          title="Event Date" allowRangeSelection={false}
           setStartDate={date => this.setEventDate(date)} setEndDate={null}
         />
       </Content>
