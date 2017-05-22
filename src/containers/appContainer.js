@@ -9,6 +9,7 @@ import PatientScreen from './patientScreen'
 import EventScreen from './eventScreen'
 import MedicationScreen from './medicineScreen'
 import ReportScreen from './reportScreen'
+import sendEmail from '../lib/email'
 
 type Props = {
   event: Object,
