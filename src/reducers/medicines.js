@@ -1,5 +1,6 @@
 import createReducer from '../lib/createReducer'
 import * as types from '../actions/types'
+import Colors from './colors'
 
 export const medicine = createReducer({}, {
   [types.SET_MEDICINE_CLASS](state, action) {
@@ -28,7 +29,11 @@ export const medicine = createReducer({}, {
 export const medicines = createReducer({}, {
   [types.ADD_MEDICINE](state, action) {
     const newState = state.slice()
-    newState.push(action.payload)
+    const index = newState.length
+    const color = Colors.medicines[index]
+    const newMedicine = action.payload
+    newMedicine.color = color
+    newState.push(newMedicine)
     return newState
   },
 })

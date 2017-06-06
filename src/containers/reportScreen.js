@@ -5,11 +5,39 @@
 */
 
 import React, { Component } from 'react'
-import { Content, List, ListItem, Text } from 'native-base'
+import { StyleSheet, View, Text } from 'react-native'
+import Calendar from 'react-native-calendar'
+import { Content } from 'native-base'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import EmailModal from './emailModal'
+import Colors from './calendarIndicators'
+
+
+const styles = StyleSheet.create({
+  weekendHeading: {
+    color: 'black',
+  },
+  weekendDayText: {
+    color: 'black',
+  },
+  medicineIndicator: {
+    width: 10,
+    height: 10,
+  },
+  table: {
+    flexDirection: 'row',
+    flex: 1,
+    padding: 3,
+  },
+  eventsColumn: {
+    flex: 1,
+  },
+  medicinesColumn: {
+    flex: 1,
+  },
+})
 
 type Props = {
   events: [],
@@ -26,30 +54,46 @@ class ReportScreen extends Component {
     super(props)
     this.state = {
       emailModalVisible: true,
+      selectedDate: '',
     }
+  }
+
+  onDateSelect(date) {
+    this.setState({ selectedDate: date })
   }
 
   render() {
     return (
       <Content>
-        <List>
-          <ListItem itemDivider>
+        <Calendar
+          showControls
+          showEventIndicators // medicine square - eventIndicator, event circle - hasEventCircle
+          events={[{ date: '2017-06-03', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[0] }], hasEventCircle: { backgroundColor: Colors.events[0] } },
+                   { date: '2017-06-04', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[0] }] },
+                   { date: '2017-06-05', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[0] }] },
+                   { date: '2017-06-06', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[0] }], hasEventCircle: { backgroundColor: Colors.events[1] } },
+                   { date: '2017-06-07', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[1] }] },
+                   { date: '2017-06-08', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[1] }] },
+                   { date: '2017-06-11', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[2] }] },
+                   { date: '2017-06-12', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[2] }], hasEventCircle: { backgroundColor: Colors.events[2] } },
+                   { date: '2017-06-13', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[2] }], hasEventCircle: { backgroundColor: Colors.events[3] } },
+                   { date: '2017-06-14', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[3] }] },
+                   { date: '2017-06-21', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[4] }] },
+                   { date: '2017-06-22', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[4] }] },
+                   { date: '2017-06-23', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[5] }], hasEventCircle: { backgroundColor: Colors.events[4] } },
+                   { date: '2017-06-24', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[5] }] },
+          ]
+                 }
+          customStyle={styles}
+          onDateSelect={date => this.onDateSelect(date)}
+        />
+        <View style={styles.table}>
+          <View style={styles.eventsColumn}>
             <Text>Events</Text>
-          </ListItem>
-          {this.props.events.map((event, index) =>
-            <ListItem key={index}>
-              <Text>{event.severity} {event.reaction}</Text>
-            </ListItem> // eslint-disable-line  comma-dangle
-          )}
-          <ListItem itemDivider>
-            <Text>Medicines</Text>
-          </ListItem>
-          {this.props.medicines.map((medicine, index) =>
-            <ListItem key={index}>
-              <Text>{medicine.antibiotic} {medicine.dose}</Text>
-            </ListItem> // eslint-disable-line  comma-dangle
-          )}
-        </List>
+            <Text>{this.state.selectedDate}</Text>
+          </View>
+          <View style={styles.medicinesColumn}><Text>Medicines</Text></View>
+        </View>
         <EmailModal modalVisible={this.props.emailModalVisible} title="Send Report to" toggleEmailModal={() => this.props.toggleEmailModal()} />
       </Content>
     )
