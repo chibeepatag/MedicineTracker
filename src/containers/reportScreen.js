@@ -5,7 +5,7 @@
 */
 
 import React, { Component } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
 import Calendar from 'react-native-calendar'
 import { Content } from 'native-base'
 import { connect } from 'react-redux'
@@ -62,28 +62,125 @@ class ReportScreen extends Component {
     this.setState({ selectedDate: date })
   }
 
+  summarize() {
+    const dates = this.getArrayOfDates()
+    const events = this.props.events
+    const medicines = this.props.medicines
+
+    const data = {}
+    dates.map((date) => {
+      const eventsOnDay = events.filter(event => event.date.toLocaleDateString() === date.toLocaleDateString())
+      const medicinesOnDay = medicines.filter(medicine => (medicine.start.getTime() <= date.getTime() || medicine.end.getTime() >= date.getTime()))
+      data[date] = { events: eventsOnDay, medicines: medicinesOnDay }
+      return data[date]
+    }
+    )
+    console.log(data)
+    return data
+  }
+
+  getArrayOfDates() {
+    const startDate = this.getMinimumDate()
+    const endDate = this.getMaximumDate()
+
+    const oneDay = 86400000
+    const dates = []
+
+    for (let i = startDate.getTime(); i < endDate.getTime(); i += oneDay) {
+      dates.push(new Date(i))
+    }
+    return dates
+  }
+
+  getMinimumDate() {
+    const events = this.props.events
+    const medicines = this.props.medicines
+    let minEventDate = new Date()
+    let minMedDate = new Date()
+    events.map((event) => {
+      if (event.date.getTime() < minEventDate.getTime()) {
+        minEventDate = event.date
+      }
+      return 0
+    })
+    medicines.map((medicine) => {
+      if (medicine.start.getTime() < minMedDate.getTime()) {
+        minMedDate = medicine.start
+      }
+      return 0
+    })
+
+    let minDate = minEventDate
+    if (minEventDate.getTime() > minMedDate.getTime()) {
+      minDate = minMedDate
+    }
+    return minDate
+  }
+
+  getMaximumDate() {
+    const events = this.props.events
+    const medicines = this.props.medicines
+    let maxEventDate = new Date('2000-01-01')
+    let maxMedDate = new Date('2000-01-01')
+    events.map((event) => {
+      if (event.date.getTime() > maxEventDate.getTime()) {
+        maxEventDate = event.date
+      }
+      return 0
+    })
+    medicines.map((medicine) => {
+      if (medicine.start.getTime() > maxMedDate.getTime()) {
+        maxMedDate = medicine.start
+      }
+      return 0
+    })
+
+    let maxDate = maxEventDate
+    if (maxEventDate.getTime() < maxMedDate.getTime()) {
+      maxDate = maxMedDate
+    }
+    return maxDate
+  }
+
+  eventIndicators() {
+    const dates = this.getArrayOfDates()
+    const data = this.summarize()
+
+    const eventIndicators = []
+    dates.map((date) => {
+      const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+      const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth()
+      const dateString = `${date.getFullYear()}-${month}-${day}`
+      const events = data[date].events
+      const medicines = data[date].medicines
+      if (events.length > 0 || medicines.length > 0) {
+        const indicator = { date: dateString }
+        if (events.length > 0) {
+          indicator.hasEventCircle = { backgroundColor: events[0].color }
+        }
+        if (medicines.length > 0) {
+          indicator.eventIndicator = { width: 10, height: 10, backgroundColor: medicines[0].color }
+        }
+        eventIndicators.push(indicator)
+      }
+    })
+    console.log(eventIndicators)
+    return eventIndicators
+  }
+
   render() {
+    const startDate = this.getMinimumDate()
+    const day = startDate.getDate() < 10 ? `0${startDate.getDate()}` : startDate.getDate()
+    const month = startDate.getMonth() < 9 ? `0${startDate.getMonth() + 1}` : startDate.getMonth()
+    const startDateString = `${startDate.getFullYear()}-${month}-${day}`
+    const eventIndicators = this.eventIndicators()
     return (
       <Content>
         <Calendar
           showControls
           showEventIndicators // medicine square - eventIndicator, event circle - hasEventCircle
-          events={[{ date: '2017-06-03', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[0] }], hasEventCircle: { backgroundColor: Colors.events[0] } },
-                   { date: '2017-06-04', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[0] }] },
-                   { date: '2017-06-05', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[0] }] },
-                   { date: '2017-06-06', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[0] }], hasEventCircle: { backgroundColor: Colors.events[1] } },
-                   { date: '2017-06-07', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[1] }] },
-                   { date: '2017-06-08', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[1] }] },
-                   { date: '2017-06-11', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[2] }] },
-                   { date: '2017-06-12', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[2] }], hasEventCircle: { backgroundColor: Colors.events[2] } },
-                   { date: '2017-06-13', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[2] }], hasEventCircle: { backgroundColor: Colors.events[3] } },
-                   { date: '2017-06-14', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[3] }] },
-                   { date: '2017-06-21', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[4] }] },
-                   { date: '2017-06-22', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[4] }] },
-                   { date: '2017-06-23', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[5] }], hasEventCircle: { backgroundColor: Colors.events[4] } },
-                   { date: '2017-06-24', eventIndicator: [styles.medicineIndicator, { backgroundColor: Colors.medicines[5] }] },
-          ]
-                 }
+          startDate={startDateString}
+          events={eventIndicators}
           customStyle={styles}
           onDateSelect={date => this.onDateSelect(date)}
         />
@@ -91,8 +188,13 @@ class ReportScreen extends Component {
           <View style={styles.eventsColumn}>
             <Text>Events</Text>
             <Text>{this.state.selectedDate}</Text>
+            <TouchableHighlight onPress={() => this.eventIndicators()}><Text>BUTTON</Text></TouchableHighlight>
           </View>
-          <View style={styles.medicinesColumn}><Text>Medicines</Text></View>
+          <View style={styles.medicinesColumn}>
+            <Text>Medicines</Text>
+            <Text>{this.getMinimumDate().toLocaleString()}</Text>
+            <Text>{this.getMaximumDate().toLocaleString()}</Text>
+          </View>
         </View>
         <EmailModal modalVisible={this.props.emailModalVisible} title="Send Report to" toggleEmailModal={() => this.props.toggleEmailModal()} />
       </Content>
