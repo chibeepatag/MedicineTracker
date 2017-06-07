@@ -12,7 +12,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import EmailModal from './emailModal'
-import Colors from './calendarIndicators'
 
 
 const styles = StyleSheet.create({
@@ -70,13 +69,11 @@ class ReportScreen extends Component {
     const data = {}
     dates.map((date) => {
       const eventsOnDay = events.filter(event => event.date.toLocaleDateString() === date.toLocaleDateString())
-
-      const medicinesOnDay = medicines.filter(medicine => (medicine.start.getTime() <= date.getTime() || medicine.end.getTime() >= date.getTime()))
+      const medicinesOnDay = medicines.filter(medicine => (medicine.start.getTime() <= date.getTime() && medicine.end.getTime() >= date.getTime()))
       data[date] = { events: eventsOnDay, medicines: medicinesOnDay }
       return data[date]
     }
     )
-    console.log('data', data)
     return data
   }
 
@@ -90,7 +87,6 @@ class ReportScreen extends Component {
     for (let i = startDate.getTime(); i <= endDate.getTime(); i += oneDay) {
       dates.push(new Date(i))
     }
-    console.log('dates', dates)
     return dates
   }
 
@@ -116,7 +112,6 @@ class ReportScreen extends Component {
     if (minEventDate.getTime() > minMedDate.getTime()) {
       minDate = minMedDate
     }
-    console.log('min date', minDate)
     return minDate
   }
 
@@ -142,7 +137,6 @@ class ReportScreen extends Component {
     if (maxEventDate.getTime() < maxMedDate.getTime()) {
       maxDate = maxMedDate
     }
-    console.log('max date', maxDate)
     return maxDate
   }
 
