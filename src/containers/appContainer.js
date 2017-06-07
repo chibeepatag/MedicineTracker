@@ -9,10 +9,13 @@ import PatientScreen from './patientScreen'
 import EventScreen from './eventScreen'
 import MedicationScreen from './medicineScreen'
 import ReportScreen from './reportScreen'
+import sendEmail from '../lib/email'
 
 type Props = {
   event: Object,
   medicine: Object,
+  events: [],
+  medicines: [],
   addEvent: Function,
   addMedicine: Function,
 }
@@ -46,20 +49,36 @@ class AppContainer extends Component {
   add() {
     if (this.state.currentTab === 1) {
       const event = this.props.event
-      this.props.addEvent(event)
-      Toast.show({
-        text: 'Event added!',
-        position: 'bottom',
-        duration: 1500,
-      })
+      if (this.props.events.length < 15) {
+        this.props.addEvent(event)
+        Toast.show({
+          text: 'Event added!',
+          position: 'bottom',
+          duration: 1500,
+        })
+      } else {
+        Toast.show({
+          text: 'You can only add upto 15 events',
+          position: 'bottom',
+          duration: 2000,
+        })
+      }
     } else if (this.state.currentTab === 2) {
       const medicine = this.props.medicine
-      this.props.addMedicine(medicine)
-      Toast.show({
-        text: 'Medicine added!',
-        position: 'bottom',
-        duration: 1500,
-      })
+      if (this.props.medicines.length < 15) {
+        this.props.addMedicine(medicine)
+        Toast.show({
+          text: 'Medicine added!',
+          position: 'bottom',
+          duration: 1500,
+        })
+      } else {
+        Toast.show({
+          text: 'You can only add upto 15 medicines',
+          position: 'bottom',
+          duration: 2000,
+        })
+      }
     }
   }
 
@@ -110,6 +129,8 @@ class AppContainer extends Component {
 const mapStateToProps = state => ({
   event: state.event,
   medicine: state.medicine,
+  events: state.events,
+  medicines: state.medicines,
 })
 
 function mapDispatchToProps(dispatch) {

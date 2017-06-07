@@ -9,6 +9,7 @@ import {
   TextInput,
   } from 'react-native'
 import { Button, Icon, Toast } from 'native-base'
+import sendEmail from '../lib/email'
 
 const styles = StyleSheet.create({
   modalContainer: {
@@ -52,13 +53,15 @@ export default class EmailModal extends Component {
   }
 
   send() {
-    console.log('send')
-    this.props.toggleEmailModal()
-    Toast.show({
-      text: 'Report sent!',
-      position: 'bottom',
-      duration: 1500,
-    })
+    const sent = sendEmail()
+    if (sent) {
+      this.props.toggleEmailModal()
+      Toast.show({
+        text: 'Report sent!',
+        position: 'bottom',
+        duration: 1500,
+      })
+    }
   }
 
   render() {

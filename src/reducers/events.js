@@ -1,5 +1,6 @@
 import createReducer from '../lib/createReducer'
 import * as types from '../actions/types'
+import Colors from './colors'
 
 export const event = createReducer({}, {
   [types.SET_EVENT_DATE](state, action) {
@@ -19,7 +20,10 @@ export const event = createReducer({}, {
 export const events = createReducer({}, {
   [types.ADD_EVENT](state, action) {
     const newState = state.slice()
-    newState.push(action.payload)
+    const newEvent = action.payload
+    const color = Colors.events[newEvent.reaction]
+    newEvent.color = color
+    newState.push(newEvent)
     return newState
   },
 })
