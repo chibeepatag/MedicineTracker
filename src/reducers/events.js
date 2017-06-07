@@ -20,9 +20,8 @@ export const event = createReducer({}, {
 export const events = createReducer({}, {
   [types.ADD_EVENT](state, action) {
     const newState = state.slice()
-    const index = newState.length
-    const color = Colors.events[index]
     const newEvent = action.payload
+    const color = Colors.events[newEvent.reaction]
     newEvent.color = color
     newState.push(newEvent)
     return newState

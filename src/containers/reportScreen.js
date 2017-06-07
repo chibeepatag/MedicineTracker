@@ -70,12 +70,13 @@ class ReportScreen extends Component {
     const data = {}
     dates.map((date) => {
       const eventsOnDay = events.filter(event => event.date.toLocaleDateString() === date.toLocaleDateString())
+
       const medicinesOnDay = medicines.filter(medicine => (medicine.start.getTime() <= date.getTime() || medicine.end.getTime() >= date.getTime()))
       data[date] = { events: eventsOnDay, medicines: medicinesOnDay }
       return data[date]
     }
     )
-    console.log(data)
+    console.log('data', data)
     return data
   }
 
@@ -86,9 +87,10 @@ class ReportScreen extends Component {
     const oneDay = 86400000
     const dates = []
 
-    for (let i = startDate.getTime(); i < endDate.getTime(); i += oneDay) {
+    for (let i = startDate.getTime(); i <= endDate.getTime(); i += oneDay) {
       dates.push(new Date(i))
     }
+    console.log('dates', dates)
     return dates
   }
 
@@ -114,6 +116,7 @@ class ReportScreen extends Component {
     if (minEventDate.getTime() > minMedDate.getTime()) {
       minDate = minMedDate
     }
+    console.log('min date', minDate)
     return minDate
   }
 
@@ -129,8 +132,8 @@ class ReportScreen extends Component {
       return 0
     })
     medicines.map((medicine) => {
-      if (medicine.start.getTime() > maxMedDate.getTime()) {
-        maxMedDate = medicine.start
+      if (medicine.end.getTime() > maxMedDate.getTime()) {
+        maxMedDate = medicine.end
       }
       return 0
     })
@@ -139,6 +142,7 @@ class ReportScreen extends Component {
     if (maxEventDate.getTime() < maxMedDate.getTime()) {
       maxDate = maxMedDate
     }
+    console.log('max date', maxDate)
     return maxDate
   }
 
@@ -164,7 +168,6 @@ class ReportScreen extends Component {
         eventIndicators.push(indicator)
       }
     })
-    console.log(eventIndicators)
     return eventIndicators
   }
 
