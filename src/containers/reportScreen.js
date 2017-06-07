@@ -5,7 +5,7 @@
 */
 
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import Calendar from 'react-native-calendar'
 import { Content } from 'native-base'
 import { connect } from 'react-redux'
@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
   medicinesColumn: {
     flex: 1,
   },
+  columnHeader: {
+    fontWeight: 'bold',
+  },
 })
 
 type Props = {
@@ -54,11 +57,9 @@ class ReportScreen extends Component {
     this.state = {
       emailModalVisible: true,
       selectedDate: '',
+      eventsOnDay: [],
+      medicinesOnDay: [],
     }
-  }
-
-  onDateSelect(date) {
-    this.setState({ selectedDate: date })
   }
 
   summarize() {
@@ -75,6 +76,20 @@ class ReportScreen extends Component {
     }
     )
     return data
+  }
+
+  onDateSelect(date) {
+    const dateObj = new Date(date)
+    const data = this.summarize()
+    console.log('date param', date)
+    console.log('date object', dateObj)
+    console.log('data', data)
+    console.log(data[dateObj])
+    if (data[dateObj]) {
+      const eventsOnDay = data[dateObj].events
+      const medicinesOnDay = data[dateObj].medicines
+      this.setState({ selectedDate: date, eventsOnDay, medicinesOnDay })
+    }
   }
 
   getArrayOfDates() {
@@ -183,14 +198,16 @@ class ReportScreen extends Component {
         />
         <View style={styles.table}>
           <View style={styles.eventsColumn}>
-            <Text>Events</Text>
-            <Text>{this.state.selectedDate}</Text>
-            <TouchableHighlight onPress={() => this.eventIndicators()}><Text>BUTTON</Text></TouchableHighlight>
+            <Text style={styles.columnHeader}>Events</Text>
+            {this.state.eventsOnDay.map((event, index) =>
+              <Text key={index}>{event.severity}-{event.reaction}</Text>
+            )}
           </View>
           <View style={styles.medicinesColumn}>
-            <Text>Medicines</Text>
-            <Text>{this.getMinimumDate().toLocaleString()}</Text>
-            <Text>{this.getMaximumDate().toLocaleString()}</Text>
+            <Text style={styles.columnHeader}>Medicines</Text>
+            {this.state.medicinesOnDay.map((medicine, index) =>
+              <Text key={index} style={{ fontSize: 10 }}>{medicine.antibiotic}-{medicine.dose}-{medicine.frequency}</Text>
+            )}
           </View>
         </View>
         <EmailModal modalVisible={this.props.emailModalVisible} title="Send Report to" toggleEmailModal={() => this.props.toggleEmailModal()} />
