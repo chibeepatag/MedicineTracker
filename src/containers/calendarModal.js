@@ -62,7 +62,7 @@ export default class CalendarModal extends Component {
 
   render() {
     const minDate = new Date(2017, 1, 1)
-    const maxDate = new Date(2017, 6, 3)
+    const maxDate = new Date()
 
     return (
       <Modal
