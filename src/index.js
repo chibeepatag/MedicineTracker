@@ -5,6 +5,7 @@
  */
 
 import React from 'react'
+import { Root } from 'native-base'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
@@ -47,7 +48,9 @@ const store = configureStore({
 
 const App = () => (
   <Provider store={store}>
-    <AppContainer />
+    <Root>
+      <AppContainer />
+    </Root>
   </Provider>
 )
 
